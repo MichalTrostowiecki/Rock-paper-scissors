@@ -15,18 +15,21 @@ div.appendChild(button2);
 div.appendChild(button3);
 container.appendChild(div);
 
-// Creating a function with loop to add event listeners for all my buttons.
-const btn = document.querySelectorAll('#btn').forEach(item =>{
-item.addEventListener('click', (event) => {
-  console.log(event.target);
-})
-});
-
-
-
 
 let playerScore = 0;
 let computerScore =0;
+const buttons = document.querySelectorAll('#btn');
+
+buttons.forEach(button => {
+  button.addEventListener('click', () => {
+    playRound(button.textContent);
+  })
+ }
+)
+
+
+
+
 
 
 
@@ -45,13 +48,13 @@ function generateComputerChoice() {
   
   switch (computerChoice) {
     case 1: 
-      computerGuess = 'scissors';
+      computerGuess = 'Scissors';
       break;
     case 2:
-      computerGuess = 'rock';
+      computerGuess = 'Rock';
       break;
     case 3:
-      computerGuess = 'paper';
+      computerGuess = 'Paper';
       break;
     default:
       break;
@@ -62,24 +65,25 @@ function generateComputerChoice() {
 
 // playRound function execute one round of a game. Based on result it adds points for w winner.
 function playRound (playerSelection, computerSelection) {
-  playerSelection = prompt('What is your pick?')
+  
   computerSelection = generateComputerChoice();
   
   if (playerSelection === computerSelection) {
     console.log(`It's a tie`);
     console.log(`Computer score: ${computerScore} Player score: ${playerScore}`)
   } else if (
-    (computerSelection === "rock" && playerSelection === "scissors") ||
-    (computerSelection === "scissors" && playerSelection === "paper") ||
-    (computerSelection === "paper" && playerSelection === "rock")) {
-      computerScore += 1;
+    (computerSelection === "Rock" && playerSelection === "Scissors") ||
+    (computerSelection === "Scissors" && playerSelection === "Paper") ||
+    (computerSelection === "Paper" && playerSelection === "Rock")) {
+      computerScore++;
       console.log(`Computers: ${computerSelection} beats Players: ${playerSelection}\nComputer score: ${computerScore} Player score: ${playerScore}`);
     
   } else {
-      playerScore += 1;
+      playerScore++;
       console.log(`Computers: ${computerSelection} lose with Players: ${playerSelection}\nComputer score: ${computerScore} Player score: ${playerScore}`);
   }
 }
+
 
 
 
