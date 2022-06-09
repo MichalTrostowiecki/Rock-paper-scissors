@@ -1,31 +1,20 @@
 const container = document.querySelector('#container');
-const div = document.createElement('div');
-const button1 = document.createElement('button');
-button1.textContent = 'Scissors';
-button1.setAttribute('id','btn');
-const button2 = document.createElement('button');
-button2.textContent = 'Rock'
-button2.setAttribute('id','btn');
-const button3 = document.createElement('button');
-button3.textContent = 'Paper';
-button3.setAttribute('id','btn');
-
-div.appendChild(button1);
-div.appendChild(button2);
-div.appendChild(button3);
-container.appendChild(div);
-
+const results = document.querySelector('#results');
+const buttons = document.querySelectorAll('#btn');
+const playerResults = document.querySelector('#playerResults');
+const totalScore = document.querySelector('#totalResults');
 
 let playerScore = 0;
-let computerScore =0;
-const buttons = document.querySelectorAll('#btn');
+let computerScore = 0;
 
-buttons.forEach(button => {
+
+
+// On click of the button execute round of a game : playRound
+buttons.forEach(button => {  
   button.addEventListener('click', () => {
     playRound(button.textContent);
   })
- }
-)
+ })
 
 // this function will generate random number for computer choice later
 function randomNumber(number) {
@@ -53,28 +42,46 @@ function generateComputerChoice() {
   return computerGuess;
   
 }
+// this checks if we don't have a winner already before playing a round 
+const checkWinner = () => {
+  winner = false;
+  if (playerScore === 5 || computerScore === 5) {
+    if (playerScore < computerScore) {
+      winner = false;
+      playerResults.textContent = `Computer wins!`;
+      winner = true;
+    } else {
+      playerResults.textContent = `Player wins!`;
+      winner = true;
+    }   
+ } 
+ return winner;
+}
+
 
 // playRound function execute one round of a game. Based on result it adds points for w winner.
 function playRound (playerSelection, computerSelection) {
   computerSelection = generateComputerChoice();
-  
-
-  if (playerScore === 5 || computerScore === 5){
-    return console.log('its the end now')
-  } else {
-    if (playerSelection === computerSelection) {
-      console.log(`It's a tie`);
-      console.log(`Computer score: ${computerScore} Player score: ${playerScore}`)
+ 
+    winner = checkWinner();
+    if (playerSelection === computerSelection && winner === false) {
+      playerResults.textContent = (`It's a Tie!`)
+      totalScore.textContent = `Player: ${playerScore} Computer: ${computerScore}`;
     } else if (
-      (computerSelection === "Rock" && playerSelection === "Scissors") ||
+      ((computerSelection === "Rock" && playerSelection === "Scissors") ||
       (computerSelection === "Scissors" && playerSelection === "Paper") ||
-      (computerSelection === "Paper" && playerSelection === "Rock")) {
+      (computerSelection === "Paper" && playerSelection === "Rock")) &&
+      (winner === false)) {
+        playerResults.textContent = `Computers: ${computerSelection} beats Players: ${playerSelection}`
         computerScore++;
-        console.log(`Computers: ${computerSelection} beats Players: ${playerSelection}\nComputer score: ${computerScore} Player score: ${playerScore}`);
-      
-    } else {
-        playerScore++;
-        console.log(`Computers: ${computerSelection} lose with Players: ${playerSelection}\nComputer score: ${computerScore} Player score: ${playerScore}`);
+        totalScore.textContent = `Player: ${playerScore} Computer: ${computerScore}`;
+    } else if(winner === false) {
+          playerResults.textContent = `Computers: ${computerSelection} lose with Players: ${playerSelection}`
+          playerScore++;
+          totalScore.textContent = `Player: ${playerScore} Computer: ${computerScore}`;
+    } else if (winner === true) {
+      alert('Refresh page to play again');
     }
-  }
+  checkWinner();
 }
+  
