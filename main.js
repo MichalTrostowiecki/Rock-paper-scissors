@@ -65,25 +65,28 @@ function generateComputerChoice() {
 
 // playRound function execute one round of a game. Based on result it adds points for w winner.
 function playRound (playerSelection, computerSelection) {
-  
   computerSelection = generateComputerChoice();
   
-  if (playerSelection === computerSelection) {
-    console.log(`It's a tie`);
-    console.log(`Computer score: ${computerScore} Player score: ${playerScore}`)
-  } else if (
-    (computerSelection === "Rock" && playerSelection === "Scissors") ||
-    (computerSelection === "Scissors" && playerSelection === "Paper") ||
-    (computerSelection === "Paper" && playerSelection === "Rock")) {
-      computerScore++;
-      console.log(`Computers: ${computerSelection} beats Players: ${playerSelection}\nComputer score: ${computerScore} Player score: ${playerScore}`);
-    
+
+  if (playerScore === 5 || computerScore === 5){
+    return console.log('its the end now')
   } else {
-      playerScore++;
-      console.log(`Computers: ${computerSelection} lose with Players: ${playerSelection}\nComputer score: ${computerScore} Player score: ${playerScore}`);
+    if (playerSelection === computerSelection) {
+      console.log(`It's a tie`);
+      console.log(`Computer score: ${computerScore} Player score: ${playerScore}`)
+    } else if (
+      (computerSelection === "Rock" && playerSelection === "Scissors") ||
+      (computerSelection === "Scissors" && playerSelection === "Paper") ||
+      (computerSelection === "Paper" && playerSelection === "Rock")) {
+        computerScore++;
+        console.log(`Computers: ${computerSelection} beats Players: ${playerSelection}\nComputer score: ${computerScore} Player score: ${playerScore}`);
+      
+    } else {
+        playerScore++;
+        console.log(`Computers: ${computerSelection} lose with Players: ${playerSelection}\nComputer score: ${computerScore} Player score: ${playerScore}`);
+    }
   }
 }
-
 
 
 
